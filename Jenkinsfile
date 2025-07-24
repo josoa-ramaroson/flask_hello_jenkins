@@ -1,7 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-            label 'jenkins-agent-my-app'
+            label 'jenkins-agent'
             defaultContainer 'python'
             yaml """
 apiVersion: v1
