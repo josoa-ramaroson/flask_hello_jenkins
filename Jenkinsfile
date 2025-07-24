@@ -12,7 +12,7 @@ metadata:
 spec:
   containers:
   - name: python
-    image: python:3.10
+    image: python:3.10-slim-bullseye
     command:
     - cat
     tty: true
