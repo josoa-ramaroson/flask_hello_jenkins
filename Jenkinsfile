@@ -1,30 +1,31 @@
 pipeline {
-    agent{
+    agent {
         kubernetes {
             label 'jenkins-agent-my-app'
+            defaultContainer 'python'
             yaml """
 apiVersion: v1
 kind: Pod
 metadata:
-    labels:
-        component: ci
+  labels:
+    some-label: jenkins-python
 spec:
-    containers:
-        - name: python
-          image: python:3.7
-          command:
-            - cat
-          tty: true
+  containers:
+  - name: python
+    image: python:3.7
+    command:
+    - cat
+    tty: true
 """
         }
     }
 
     stages {
-        stage('Test python') {
-                steps {
-                    container('python') {
-                    sh "pip install -r requirements.txt"
-                    sh "python test.py"
+        stage('Run Tests') {
+            steps {
+                container('python') {
+                    sh 'pip install -r requirements.txt'
+                    sh 'python test.py'
                 }
             }
         }
