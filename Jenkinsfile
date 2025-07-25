@@ -1,35 +1,45 @@
 pipeline {
-  agent {
-    kubernetes {
-      label 'jenkins-python'
-      defaultContainer 'python'
-      yaml """
+    agent {
+        kubernetes {
+            inheritFrom 'default'
+            yaml """
 apiVersion: v1
 kind: Pod
-metadata:
-  labels:
-    some-label: jenkins-python
 spec:
   containers:
   - name: python
-    image: python:3.10-slim-bullseye
-    command: ['cat']
+    image: python:3.7
+    command:
+    - cat
     tty: true
-  - name: jnlp
-    image: jenkins/inbound-agent:latest
-    args: ['\$(JENKINS_SECRET)', '\$(JENKINS_NAME)']
+  - name: docker
+    image: docker
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+      - mountPath: /var/run/docker.sock
+        name: docker-sock
+  volumes:
+    - name: docker-sock
+      hostPath:
+        path: /var/run/docker.sock
 """
-    }
-  }
-
-  stages {
-    stage('Run Tests') {
-      steps {
-        container('python') {
-          sh 'pip install -r requirements.txt'
-          sh 'python test.py'
         }
-      }
     }
-  }
-}
+  
+   
+    stages {
+        stage('Test python') {
+            steps {
+                container('python') {
+                    sh "python --version"
+                    sh "pip install -r requirements.txt"
+                    sh "python test.py"
+                }
+            }
+        }
+       
+
+    }
+ }
