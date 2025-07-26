@@ -44,13 +44,21 @@ spec:
         }
        
        stage('Build image') {
+          steps {
+            container('docker') {
+              sh "docker build -t localhost:5000/pythontest:latest ."
+              sh "docker push localhost:5000/pythontest:latest"
+            }
+          }
+      }
+      stage('Deploy') {
         steps {
-          container('docker') {
-            sh "docker build -t localhost:5000/pythontest:latest ."
-            sh "docker push localhost:5000/pythontest:latest"
+          container('kubectl') {
+            sh "kubectl apply -f ./kubernetes/deployment.yaml"
+            sh "kubectl apply -f ./kubernetes/service.yaml"
           }
         }
-        }
+      }                     
 
     }
  }
