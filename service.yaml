@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pythontest
+  labels:
+    app: pythontest
+spec:
+  ports:
+    - port: 5000
+      nodePort: 31000
+  selector:
+    app: pythontest
+  type: NodePort

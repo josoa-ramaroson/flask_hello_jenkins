@@ -46,8 +46,8 @@ spec:
        stage('Build image') {
         steps {
           container('docker') {
-            sh "docker build -t registry.registry.svc.cluster.local:5000/pythontest:latest ."
-            sh "docker push registry.registry.svc.cluster.local:5000/pythontest:latest"
+            sh "docker build -t registry.jenkins.svc.cluster.local:5000/pythontest:latest ."
+            sh "docker push registry.jenkins.svc.cluster.local:5000/pythontest:latest"
           }
         }
         }
