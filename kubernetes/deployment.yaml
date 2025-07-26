@@ -17,7 +17,7 @@ template:
       app: pythontest
   spec:
     containers:
-    - image: localhost:4000/pythontest:latest
+    - image: localhost:5000/pythontest:latest
       name: pythontest
       ports:
       - containerPort: 5000
