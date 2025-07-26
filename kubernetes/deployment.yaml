@@ -5,20 +5,20 @@ metadata:
   labels:
     app: pythontest
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: pythontest
   strategy:
     type: Recreate
-replicas: 1
-template:
-  metadata:
-    labels:
-      app: pythontest
-  spec:
-    containers:
-    - image: localhost:5000/pythontest:latest
-      name: pythontest
-      ports:
-      - containerPort: 5000
-        name: microport
+  template:
+    metadata:
+      labels:
+        app: pythontest
+    spec:
+      containers:
+      - name: pythontest
+        image: localhost:5000/pythontest:latest
+        ports:
+        - containerPort: 5000
+          name: microport

@@ -5,9 +5,12 @@ metadata:
   labels:
     app: pythontest
 spec:
-  ports:
-    - port: 5000
-      nodePort: 31000
   selector:
     app: pythontest
   type: NodePort
+  ports:
+    - name: http
+      port: 5000
+      targetPort: 5000
+      nodePort: 31000
+      protocol: TCP
